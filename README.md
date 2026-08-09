@@ -43,15 +43,15 @@ This makes it possible to ask questions about personal documents, notes, researc
 
 ### 🏠 Dashboard
 
-![InsightForge Dashboard](assets/dashboard.png)
+![InsightForge Dashboard](assets/screenshots/dashboard.png)
 
 ### 💬 RAG Chat
 
-![InsightForge RAG Chat](assets/rag-chat.png)
+![InsightForge RAG Chat](assets/screenshots/rag-chat.png)
 
 ### 📊 Analytics
 
-![InsightForge Analytics](assets/analytics.png)
+![InsightForge Analytics](assets/screenshots/analytics.png)
 
 ---
 
