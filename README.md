@@ -20,6 +20,20 @@
 - 🎨 Material-inspired dark user interface
 - 🔐 Secure API key management using environment variables and Streamlit Secrets
 
+## 📸 Screenshots
+
+### 🏠 Dashboard
+
+![InsightForge Dashboard](assets/screenshots/dashboard.png)
+
+### 💬 RAG Chat
+
+![InsightForge RAG Chat](assets/screenshots/rag-chat.png)
+
+### 📊 Analytics
+
+![InsightForge Analytics](assets/screenshots/analytics.png)
+
 ## 🧠 How It Works
 
 InsightForge uses a Retrieval-Augmented Generation (RAG) pipeline to answer questions from uploaded documents.
