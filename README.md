@@ -39,6 +39,22 @@ This makes it possible to ask questions about personal documents, notes, researc
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Dashboard
+
+![InsightForge Dashboard](assets/dashboard.png)
+
+### 💬 RAG Chat
+
+![InsightForge RAG Chat](assets/rag-chat.png)
+
+### 📊 Analytics
+
+![InsightForge Analytics](assets/analytics.png)
+
+---
+
 ## ⚙️ How It Works
 
 ```text
