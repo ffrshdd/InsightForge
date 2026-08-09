@@ -37,9 +37,8 @@ Context:
     try:
 
         model = genai.GenerativeModel(
-            "gemini-2.5-flash"
-        )
-
+	    "gemini-3.6-flash"
+	)
         response = model.generate_content(
             prompt
         )
