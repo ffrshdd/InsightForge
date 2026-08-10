@@ -436,7 +436,7 @@ if tab == "🏠 Home":
             <div class="m-card">
                 <div class="m-card-label">🤖 AI</div>
                 <div class="m-card-value" style="font-size:1.2rem;padding-top:6px;color:{ai_color};">{ai_status}</div>
-                <div class="m-card-sub">Gemini 2.5 Flash</div>
+                <div class="m-card-sub">Gemini AI</div>
             </div>""", unsafe_allow_html=True)
 
         st.markdown('<hr class="divider">', unsafe_allow_html=True)
@@ -459,23 +459,45 @@ if tab == "🏠 Home":
 
 # ── Smart Search ──────────────────────────────────────────
 elif tab == "🔍 Smart Search":
-    st.markdown('<div class="app-title">🔍 Smart Search</div>', unsafe_allow_html=True)
-    st.markdown('<div class="app-subtitle">Ask anything about your documents</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="app-title">🔍 Smart Search</div>',
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        '<div class="app-subtitle">Ask anything about your documents</div>',
+        unsafe_allow_html=True
+    )
 
-    query = st.text_input("Your question", placeholder="e.g. Summarize my resume")
+    query = st.text_input(
+        "Your question",
+        placeholder="e.g. Summarize my resume"
+    )
 
     if st.button("🔎 Ask InsightForge"):
         if query:
             with st.spinner("📄 Reading documents..."):
                 vectorstore = load_vectorstore()
+
             if vectorstore:
                 with st.spinner("🧠 Creating context..."):
                     docs = vectorstore.similarity_search(query, k=5)
-                    context = "\n\n".join([doc.page_content for doc in docs])
+
+                    context_parts = []
+
+                    for doc in docs:
+                        filename = doc.metadata.get("filename", "Unknown")
+                        context_parts.append(
+                            f"Source file: {filename}\n"
+                            f"Content:\n{doc.page_content}"
+                        )
+
+                    context = "\n\n---\n\n".join(context_parts)
+
                 with st.spinner("✨ Generating answer..."):
                     answer = generate_summary(context, query)
 
                 sources = []
+
                 for doc in docs:
                     filename = doc.metadata.get("filename", "Unknown")
                     sources.append({
@@ -491,8 +513,10 @@ elif tab == "🔍 Smart Search":
 
                 if query not in st.session_state.search_history:
                     st.session_state.search_history.append(query)
+
             else:
                 st.warning("Upload and index documents first.")
+
         else:
             st.warning("Enter a question.")
 
@@ -500,7 +524,7 @@ elif tab == "🔍 Smart Search":
         st.markdown('<hr class="divider">', unsafe_allow_html=True)
         st.markdown('<div class="section-title">💬 Conversation</div>', unsafe_allow_html=True)
 
-        for item in st.session_state.chat_history[::-1]:
+        for i, item in reversed(list(enumerate(st.session_state.chat_history))):
             st.markdown('<div class="chat-label-user">You</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="chat-user">{item["question"]}</div>', unsafe_allow_html=True)
             st.markdown('<div class="chat-label-ai">🔨 InsightForge</div>', unsafe_allow_html=True)
@@ -521,7 +545,7 @@ elif tab == "🔍 Smart Search":
                     data=export_txt(item["question"], item["answer"], item["sources"]),
                     file_name="insightforge_answer.txt",
                     mime="text/plain",
-                    key=f"txt_{item['question'][:20]}",
+                    key=f"txt_{i}",
                 )
             with col_md:
                 st.download_button(
@@ -529,7 +553,7 @@ elif tab == "🔍 Smart Search":
                     data=export_md(item["question"], item["answer"], item["sources"]),
                     file_name="insightforge_answer.md",
                     mime="text/markdown",
-                    key=f"md_{item['question'][:20]}",
+                    key=f"md_{i}",
                 )
 
             st.markdown('<hr class="divider">', unsafe_allow_html=True)
